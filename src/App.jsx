@@ -223,17 +223,8 @@ function dayHeader(ts) {
 // Body SVG — gentle, rounded, warm
 // ============================================================================
 
-function BodyFront({ onRegionTap, pulseRegion, heatmap }) {
-  const skin = "#F4CDA4";
-  const skinShade = "#E8B88A";
-  const skinLight = "#F9DCBA";
-  const stroke = "#B8794A";
-  const strokeLight = "#D4956A";
-  const hair = "#4A3828";
-  const hairHighlight = "#5E4734";
-  const lip = "#C87060";
-  const sw = 1.0;
 
+function BodyFront({ onRegionTap, pulseRegion, heatmap }) {
   const heatFill = (region) => {
     if (!heatmap) return "transparent";
     const count = heatmap[region] || 0;
@@ -246,327 +237,52 @@ function BodyFront({ onRegionTap, pulseRegion, heatmap }) {
   };
 
   return (
-    <svg viewBox="0 0 200 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" style={{ width: "100%", height: "100%", display: "block" }}>
-      <defs>
-        <linearGradient id="torsoShade" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor={skinLight} />
-          <stop offset="50%" stopColor={skin} />
-          <stop offset="100%" stopColor={skinShade} />
-        </linearGradient>
-        <linearGradient id="limbShade" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor={skinLight} />
-          <stop offset="100%" stopColor={skinShade} />
-        </linearGradient>
-      </defs>
-
-      {/* ============ HEAD ============ */}
-      {/* Hair back (behind head) */}
-      <path
-        d="M 78 38 Q 75 22 90 16 Q 100 12 110 16 Q 125 22 122 38 L 122 48 Q 120 52 118 50 L 82 50 Q 80 52 78 48 Z"
-        fill={hair}
-        stroke={stroke}
-        strokeWidth={sw * 0.8}
-      />
-      {/* Face/head */}
-      <path
-        d="M 82 38 Q 82 26 100 24 Q 118 26 118 38 L 118 52 Q 118 64 114 68 Q 110 72 100 72 Q 90 72 86 68 Q 82 64 82 52 Z"
-        fill={skin}
-        stroke={stroke}
-        strokeWidth={sw}
-      />
-      {/* Subtle face shading (right side slightly darker) */}
-      <path
-        d="M 108 30 Q 118 32 118 48 Q 118 62 114 67 Q 111 70 107 70 Q 111 64 112 52 Q 112 38 108 30 Z"
-        fill={skinShade}
-        opacity="0.35"
-      />
-      {/* Hair bangs (on top of face) */}
-      <path
-        d="M 82 32 Q 84 20 100 18 Q 116 20 118 32 Q 116 28 108 30 Q 100 32 92 30 Q 86 30 82 32 Z"
-        fill={hair}
-      />
-      <path
-        d="M 90 22 Q 95 18 102 20"
-        stroke={hairHighlight}
-        strokeWidth="0.6"
-        fill="none"
-        opacity="0.5"
-      />
-      {/* Ears */}
-      <ellipse cx="80" cy="47" rx="2.5" ry="4.5" fill={skinShade} stroke={stroke} strokeWidth={sw * 0.7} />
-      <ellipse cx="120" cy="47" rx="2.5" ry="4.5" fill={skinShade} stroke={stroke} strokeWidth={sw * 0.7} />
-
-      {/* Eyebrows */}
-      <path d="M 89 42 Q 93 40 96 42" stroke={hair} strokeWidth="1.4" fill="none" strokeLinecap="round" />
-      <path d="M 104 42 Q 107 40 111 42" stroke={hair} strokeWidth="1.4" fill="none" strokeLinecap="round" />
-
-      {/* Eyes */}
-      <ellipse cx="92.5" cy="47" rx="1.8" ry="1.4" fill="#2C2418" />
-      <ellipse cx="107.5" cy="47" rx="1.8" ry="1.4" fill="#2C2418" />
-      {/* Eye highlight */}
-      <circle cx="93" cy="46.5" r="0.4" fill="#FFFFFF" />
-      <circle cx="108" cy="46.5" r="0.4" fill="#FFFFFF" />
-
-      {/* Nose */}
-      <path d="M 100 50 L 98.5 57 Q 98.5 59 100 59 Q 101.5 59 101.5 57 Z" fill={skinShade} opacity="0.5" stroke={stroke} strokeWidth="0.5" strokeLinejoin="round" />
-
-      {/* Mouth */}
-      <path d="M 96 63 Q 100 65 104 63" stroke={lip} strokeWidth="1.2" fill="none" strokeLinecap="round" />
-
-      {/* Neck with shading */}
-      <path
-        d="M 93 70 L 92 82 Q 92 84 94 85 L 106 85 Q 108 84 108 82 L 107 70 Z"
-        fill={skin}
-        stroke={stroke}
-        strokeWidth={sw}
-      />
-      {/* Neck shadow under jaw */}
-      <path d="M 93 72 Q 100 76 107 72" stroke={stroke} strokeWidth="0.6" fill="none" opacity="0.5" />
-      {/* Collarbone hint */}
-      <path d="M 82 92 Q 100 96 118 92" stroke={stroke} strokeWidth="0.5" fill="none" opacity="0.4" />
-
-      {/* ============ TORSO ============ */}
-      {/* Shoulders are at ~y=88, torso narrows at waist y=215, hips flare slightly at y=260 */}
-      <path
-        d="M 94 85
-           Q 82 86 74 92
-           Q 66 96 64 106
-           L 61 125
-           Q 58 148 62 168
-           L 66 195
-           Q 68 210 70 220
-           Q 70 230 72 245
-           Q 74 258 80 268
-           Q 88 272 100 272
-           Q 112 272 120 268
-           Q 126 258 128 245
-           Q 130 230 130 220
-           Q 132 210 134 195
-           L 138 168
-           Q 142 148 139 125
-           L 136 106
-           Q 134 96 126 92
-           Q 118 86 106 85
-           Z"
-        fill="url(#torsoShade)"
-        stroke={stroke}
-        strokeWidth={sw}
-      />
-      {/* Shirt/body subtle midline (sternum hint) */}
-      <path d="M 100 96 L 100 210" stroke={stroke} strokeWidth="0.4" fill="none" opacity="0.2" strokeDasharray="1 2" />
-      {/* Chest shading — subtle pec hints */}
-      <path d="M 76 105 Q 85 115 92 118" stroke={stroke} strokeWidth="0.5" fill="none" opacity="0.25" />
-      <path d="M 124 105 Q 115 115 108 118" stroke={stroke} strokeWidth="0.5" fill="none" opacity="0.25" />
-      {/* Waist indent hint */}
-      <path d="M 70 210 Q 72 218 70 225" stroke={stroke} strokeWidth="0.4" fill="none" opacity="0.3" />
-      <path d="M 130 210 Q 128 218 130 225" stroke={stroke} strokeWidth="0.4" fill="none" opacity="0.3" />
-      {/* Navel hint */}
-      <ellipse cx="100" cy="195" rx="1.2" ry="2" fill={stroke} opacity="0.25" />
-
-      {/* ============ LEFT ARM (viewer's left) ============ */}
-      {/* Upper arm */}
-      <path
-        d="M 74 92
-           Q 62 96 58 108
-           Q 54 122 52 140
-           Q 51 154 53 162
-           L 55 164
-           Q 58 158 60 145
-           Q 63 125 68 108
-           Q 72 98 74 92 Z"
-        fill="url(#limbShade)"
-        stroke={stroke}
-        strokeWidth={sw}
-      />
-      {/* Elbow */}
-      <circle cx="53" cy="164" r="5.5" fill={skin} stroke={stroke} strokeWidth={sw} />
-      {/* Forearm */}
-      <path
-        d="M 48 164
-           Q 46 180 46 200
-           Q 46 218 48 232
-           Q 49 240 52 241
-           Q 56 242 57 236
-           Q 58 222 58 208
-           Q 58 188 58 168 Z"
-        fill="url(#limbShade)"
-        stroke={stroke}
-        strokeWidth={sw}
-      />
-      {/* Wrist */}
-      <path d="M 48 240 Q 52 242 57 240" stroke={stroke} strokeWidth="0.6" fill="none" opacity="0.5" />
-      {/* Hand */}
-      <path
-        d="M 48 240
-           Q 46 245 46 252
-           Q 46 260 50 262
-           Q 54 263 58 261
-           Q 60 258 60 250
-           Q 59 244 57 240 Z"
-        fill={skin}
-        stroke={stroke}
-        strokeWidth={sw}
-      />
-      {/* Finger hint */}
-      <path d="M 50 255 Q 52 260 56 258" stroke={stroke} strokeWidth="0.4" fill="none" opacity="0.4" />
-
-      {/* ============ RIGHT ARM ============ */}
-      <path
-        d="M 126 92
-           Q 138 96 142 108
-           Q 146 122 148 140
-           Q 149 154 147 162
-           L 145 164
-           Q 142 158 140 145
-           Q 137 125 132 108
-           Q 128 98 126 92 Z"
-        fill="url(#limbShade)"
-        stroke={stroke}
-        strokeWidth={sw}
-      />
-      <circle cx="147" cy="164" r="5.5" fill={skin} stroke={stroke} strokeWidth={sw} />
-      <path
-        d="M 152 164
-           Q 154 180 154 200
-           Q 154 218 152 232
-           Q 151 240 148 241
-           Q 144 242 143 236
-           Q 142 222 142 208
-           Q 142 188 142 168 Z"
-        fill="url(#limbShade)"
-        stroke={stroke}
-        strokeWidth={sw}
-      />
-      <path d="M 143 240 Q 148 242 152 240" stroke={stroke} strokeWidth="0.6" fill="none" opacity="0.5" />
-      <path
-        d="M 152 240
-           Q 154 245 154 252
-           Q 154 260 150 262
-           Q 146 263 142 261
-           Q 140 258 140 250
-           Q 141 244 143 240 Z"
-        fill={skin}
-        stroke={stroke}
-        strokeWidth={sw}
-      />
-      <path d="M 150 255 Q 148 260 144 258" stroke={stroke} strokeWidth="0.4" fill="none" opacity="0.4" />
-
-      {/* ============ LEFT LEG ============ */}
-      {/* Thigh */}
-      <path
-        d="M 80 268
-           Q 76 290 75 320
-           Q 75 345 77 360
-           L 82 362
-           Q 84 345 86 320
-           Q 88 295 90 272
-           Z"
-        fill="url(#limbShade)"
-        stroke={stroke}
-        strokeWidth={sw}
-      />
-      {/* Knee */}
-      <ellipse cx="80" cy="364" rx="7" ry="6" fill={skin} stroke={stroke} strokeWidth={sw} />
-      <path d="M 77 364 Q 80 368 83 364" stroke={stroke} strokeWidth="0.5" fill="none" opacity="0.4" />
-      {/* Calf/shin */}
-      <path
-        d="M 73 370
-           Q 72 400 74 430
-           Q 75 450 78 462
-           Q 80 470 84 470
-           Q 88 470 88 462
-           Q 88 450 88 430
-           Q 88 400 87 370
-           Z"
-        fill="url(#limbShade)"
-        stroke={stroke}
-        strokeWidth={sw}
-      />
-      {/* Ankle */}
-      <path d="M 76 466 Q 82 470 88 466" stroke={stroke} strokeWidth="0.5" fill="none" opacity="0.4" />
-      {/* Foot */}
-      <path
-        d="M 76 470
-           Q 72 474 72 480
-           Q 72 484 78 485
-           Q 86 485 92 482
-           Q 92 476 90 470 Z"
-        fill={skin}
-        stroke={stroke}
-        strokeWidth={sw}
+    <svg
+      viewBox="0 0 200 500"
+      xmlns="http://www.w3.org/2000/svg"
+      preserveAspectRatio="xMidYMid meet"
+      style={{ width: "100%", height: "100%", display: "block" }}
+    >
+      <image
+        href="/body-front.png"
+        x="18"
+        y="8"
+        width="164"
+        height="484"
+        preserveAspectRatio="xMidYMid meet"
       />
 
-      {/* ============ RIGHT LEG ============ */}
-      <path
-        d="M 120 268
-           Q 124 290 125 320
-           Q 125 345 123 360
-           L 118 362
-           Q 116 345 114 320
-           Q 112 295 110 272
-           Z"
-        fill="url(#limbShade)"
-        stroke={stroke}
-        strokeWidth={sw}
-      />
-      <ellipse cx="120" cy="364" rx="7" ry="6" fill={skin} stroke={stroke} strokeWidth={sw} />
-      <path d="M 117 364 Q 120 368 123 364" stroke={stroke} strokeWidth="0.5" fill="none" opacity="0.4" />
-      <path
-        d="M 127 370
-           Q 128 400 126 430
-           Q 125 450 122 462
-           Q 120 470 116 470
-           Q 112 470 112 462
-           Q 112 450 112 430
-           Q 112 400 113 370
-           Z"
-        fill="url(#limbShade)"
-        stroke={stroke}
-        strokeWidth={sw}
-      />
-      <path d="M 112 466 Q 118 470 124 466" stroke={stroke} strokeWidth="0.5" fill="none" opacity="0.4" />
-      <path
-        d="M 124 470
-           Q 128 474 128 480
-           Q 128 484 122 485
-           Q 114 485 108 482
-           Q 108 476 110 470 Z"
-        fill={skin}
-        stroke={stroke}
-        strokeWidth={sw}
-      />
+      {/* heatmap overlays */}
+      <ellipse cx="100" cy="48" rx="17" ry="22" fill={heatFill("head")} pointerEvents="none" />
+      <circle cx="79" cy="99" r="12" fill={heatFill("left_shoulder")} pointerEvents="none" />
+      <circle cx="121" cy="99" r="12" fill={heatFill("right_shoulder")} pointerEvents="none" />
+      <ellipse cx="100" cy="146" rx="28" ry="24" fill={heatFill("chest")} pointerEvents="none" />
+      <ellipse cx="100" cy="207" rx="27" ry="28" fill={heatFill("abdomen")} pointerEvents="none" />
+      <ellipse cx="60" cy="188" rx="12" ry="42" fill={heatFill("left_arm")} pointerEvents="none" />
+      <ellipse cx="140" cy="188" rx="12" ry="42" fill={heatFill("right_arm")} pointerEvents="none" />
+      <circle cx="86" cy="268" r="13" fill={heatFill("left_hip")} pointerEvents="none" />
+      <circle cx="114" cy="268" r="13" fill={heatFill("right_hip")} pointerEvents="none" />
+      <circle cx="86" cy="381" r="14" fill={heatFill("left_knee")} pointerEvents="none" />
+      <circle cx="114" cy="381" r="14" fill={heatFill("right_knee")} pointerEvents="none" />
+      <ellipse cx="84" cy="474" rx="13" ry="10" fill={heatFill("left_foot")} pointerEvents="none" />
+      <ellipse cx="116" cy="474" rx="13" ry="10" fill={heatFill("right_foot")} pointerEvents="none" />
 
-      {/* ============ HEATMAP OVERLAYS ============ */}
-      <ellipse cx="100" cy="48" rx="18" ry="24" fill={heatFill("head")} pointerEvents="none" />
-      <circle cx="78" cy="95" r="11" fill={heatFill("left_shoulder")} pointerEvents="none" />
-      <circle cx="122" cy="95" r="11" fill={heatFill("right_shoulder")} pointerEvents="none" />
-      <ellipse cx="100" cy="135" rx="30" ry="26" fill={heatFill("chest")} pointerEvents="none" />
-      <ellipse cx="100" cy="200" rx="30" ry="30" fill={heatFill("abdomen")} pointerEvents="none" />
-      <ellipse cx="52" cy="175" rx="11" ry="35" fill={heatFill("left_arm")} pointerEvents="none" />
-      <ellipse cx="148" cy="175" rx="11" ry="35" fill={heatFill("right_arm")} pointerEvents="none" />
-      <circle cx="82" cy="262" r="12" fill={heatFill("left_hip")} pointerEvents="none" />
-      <circle cx="118" cy="262" r="12" fill={heatFill("right_hip")} pointerEvents="none" />
-      <circle cx="80" cy="364" r="13" fill={heatFill("left_knee")} pointerEvents="none" />
-      <circle cx="120" cy="364" r="13" fill={heatFill("right_knee")} pointerEvents="none" />
-      <ellipse cx="82" cy="478" rx="12" ry="8" fill={heatFill("left_foot")} pointerEvents="none" />
-      <ellipse cx="118" cy="478" rx="12" ry="8" fill={heatFill("right_foot")} pointerEvents="none" />
-
-      {/* ============ TAP ZONES ============ */}
+      {/* tap zones */}
       {!heatmap && (
         <g>
-          <ellipse cx="100" cy="45" rx="24" ry="32" fill="transparent" onClick={() => onRegionTap("head")} style={{ cursor: "pointer" }} />
-          <circle cx="78" cy="95" r="15" fill="transparent" onClick={() => onRegionTap("left_shoulder")} style={{ cursor: "pointer" }} />
-          <circle cx="122" cy="95" r="15" fill="transparent" onClick={() => onRegionTap("right_shoulder")} style={{ cursor: "pointer" }} />
-          <ellipse cx="100" cy="140" rx="32" ry="32" fill="transparent" onClick={() => onRegionTap("chest")} style={{ cursor: "pointer" }} />
-          <ellipse cx="100" cy="205" rx="32" ry="34" fill="transparent" onClick={() => onRegionTap("abdomen")} style={{ cursor: "pointer" }} />
-          <ellipse cx="52" cy="180" rx="16" ry="52" fill="transparent" onClick={() => onRegionTap("left_arm")} style={{ cursor: "pointer" }} />
-          <ellipse cx="148" cy="180" rx="16" ry="52" fill="transparent" onClick={() => onRegionTap("right_arm")} style={{ cursor: "pointer" }} />
-          <circle cx="82" cy="262" r="16" fill="transparent" onClick={() => onRegionTap("left_hip")} style={{ cursor: "pointer" }} />
-          <circle cx="118" cy="262" r="16" fill="transparent" onClick={() => onRegionTap("right_hip")} style={{ cursor: "pointer" }} />
-          <circle cx="80" cy="364" r="18" fill="transparent" onClick={() => onRegionTap("left_knee")} style={{ cursor: "pointer" }} />
-          <circle cx="120" cy="364" r="18" fill="transparent" onClick={() => onRegionTap("right_knee")} style={{ cursor: "pointer" }} />
-          <ellipse cx="82" cy="478" rx="14" ry="12" fill="transparent" onClick={() => onRegionTap("left_foot")} style={{ cursor: "pointer" }} />
-          <ellipse cx="118" cy="478" rx="14" ry="12" fill="transparent" onClick={() => onRegionTap("right_foot")} style={{ cursor: "pointer" }} />
+          <ellipse cx="100" cy="48" rx="24" ry="30" fill="transparent" onClick={() => onRegionTap("head")} style={{ cursor: "pointer" }} />
+          <circle cx="79" cy="99" r="16" fill="transparent" onClick={() => onRegionTap("left_shoulder")} style={{ cursor: "pointer" }} />
+          <circle cx="121" cy="99" r="16" fill="transparent" onClick={() => onRegionTap("right_shoulder")} style={{ cursor: "pointer" }} />
+          <ellipse cx="100" cy="146" rx="34" ry="30" fill="transparent" onClick={() => onRegionTap("chest")} style={{ cursor: "pointer" }} />
+          <ellipse cx="100" cy="207" rx="34" ry="34" fill="transparent" onClick={() => onRegionTap("abdomen")} style={{ cursor: "pointer" }} />
+          <ellipse cx="60" cy="188" rx="18" ry="58" fill="transparent" onClick={() => onRegionTap("left_arm")} style={{ cursor: "pointer" }} />
+          <ellipse cx="140" cy="188" rx="18" ry="58" fill="transparent" onClick={() => onRegionTap("right_arm")} style={{ cursor: "pointer" }} />
+          <circle cx="86" cy="268" r="18" fill="transparent" onClick={() => onRegionTap("left_hip")} style={{ cursor: "pointer" }} />
+          <circle cx="114" cy="268" r="18" fill="transparent" onClick={() => onRegionTap("right_hip")} style={{ cursor: "pointer" }} />
+          <circle cx="86" cy="381" r="20" fill="transparent" onClick={() => onRegionTap("left_knee")} style={{ cursor: "pointer" }} />
+          <circle cx="114" cy="381" r="20" fill="transparent" onClick={() => onRegionTap("right_knee")} style={{ cursor: "pointer" }} />
+          <ellipse cx="84" cy="474" rx="16" ry="14" fill="transparent" onClick={() => onRegionTap("left_foot")} style={{ cursor: "pointer" }} />
+          <ellipse cx="116" cy="474" rx="16" ry="14" fill="transparent" onClick={() => onRegionTap("right_foot")} style={{ cursor: "pointer" }} />
         </g>
       )}
 
@@ -575,15 +291,9 @@ function BodyFront({ onRegionTap, pulseRegion, heatmap }) {
   );
 }
 
-function BodyBack({ onRegionTap, pulseRegion, heatmap }) {
-  const skin = "#F4CDA4";
-  const skinShade = "#E8B88A";
-  const skinLight = "#F9DCBA";
-  const stroke = "#B8794A";
-  const hair = "#4A3828";
-  const hairHighlight = "#5E4734";
-  const sw = 1.0;
 
+
+function BodyBack({ onRegionTap, pulseRegion, heatmap }) {
   const heatFill = (region) => {
     if (!heatmap) return "transparent";
     const count = heatmap[region] || 0;
@@ -596,295 +306,52 @@ function BodyBack({ onRegionTap, pulseRegion, heatmap }) {
   };
 
   return (
-    <svg viewBox="0 0 200 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" style={{ width: "100%", height: "100%", display: "block" }}>
-      <defs>
-        <linearGradient id="torsoShadeBack" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor={skinLight} />
-          <stop offset="50%" stopColor={skin} />
-          <stop offset="100%" stopColor={skinShade} />
-        </linearGradient>
-        <linearGradient id="limbShadeBack" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor={skinLight} />
-          <stop offset="100%" stopColor={skinShade} />
-        </linearGradient>
-      </defs>
-
-      {/* ============ HEAD (back) ============ */}
-      {/* Head shape — same as front but covered by hair */}
-      <path
-        d="M 82 38 Q 82 26 100 24 Q 118 26 118 38 L 118 52 Q 118 64 114 68 Q 110 72 100 72 Q 90 72 86 68 Q 82 64 82 52 Z"
-        fill={skin}
-        stroke={stroke}
-        strokeWidth={sw}
-      />
-      {/* Hair covering back of head */}
-      <path
-        d="M 78 36 Q 76 20 90 16 Q 100 12 110 16 Q 124 20 122 36 L 122 60 Q 120 66 116 68 L 116 56 Q 114 50 108 50 L 92 50 Q 86 50 84 56 L 84 68 Q 80 66 78 60 Z"
-        fill={hair}
-        stroke={stroke}
-        strokeWidth={sw * 0.8}
-      />
-      {/* Hair highlight strands */}
-      <path d="M 88 22 Q 92 30 90 42" stroke={hairHighlight} strokeWidth="0.6" fill="none" opacity="0.6" />
-      <path d="M 100 18 Q 100 30 100 44" stroke={hairHighlight} strokeWidth="0.6" fill="none" opacity="0.5" />
-      <path d="M 112 22 Q 108 30 110 42" stroke={hairHighlight} strokeWidth="0.6" fill="none" opacity="0.6" />
-      {/* Hair nape/bottom edge */}
-      <path d="M 84 62 Q 100 68 116 62" stroke={hair} strokeWidth="1.2" fill="none" />
-
-      {/* Ears (partially visible) */}
-      <path d="M 80 46 Q 78 48 78 52 Q 78 54 80 55" fill={skinShade} stroke={stroke} strokeWidth={sw * 0.7} />
-      <path d="M 120 46 Q 122 48 122 52 Q 122 54 120 55" fill={skinShade} stroke={stroke} strokeWidth={sw * 0.7} />
-
-      {/* Neck */}
-      <path
-        d="M 93 70 L 92 82 Q 92 84 94 85 L 106 85 Q 108 84 108 82 L 107 70 Z"
-        fill={skin}
-        stroke={stroke}
-        strokeWidth={sw}
-      />
-      {/* Neck back crease */}
-      <path d="M 94 75 Q 100 77 106 75" stroke={stroke} strokeWidth="0.5" fill="none" opacity="0.5" />
-
-      {/* ============ TORSO (back view) ============ */}
-      <path
-        d="M 94 85
-           Q 82 86 74 92
-           Q 66 96 64 106
-           L 61 125
-           Q 58 148 62 168
-           L 66 195
-           Q 68 210 70 220
-           Q 70 230 72 245
-           Q 74 258 80 268
-           Q 88 272 100 272
-           Q 112 272 120 268
-           Q 126 258 128 245
-           Q 130 230 130 220
-           Q 132 210 134 195
-           L 138 168
-           Q 142 148 139 125
-           L 136 106
-           Q 134 96 126 92
-           Q 118 86 106 85
-           Z"
-        fill="url(#torsoShadeBack)"
-        stroke={stroke}
-        strokeWidth={sw}
+    <svg
+      viewBox="0 0 200 500"
+      xmlns="http://www.w3.org/2000/svg"
+      preserveAspectRatio="xMidYMid meet"
+      style={{ width: "100%", height: "100%", display: "block" }}
+    >
+      <image
+        href="/body-back.png"
+        x="18"
+        y="8"
+        width="164"
+        height="484"
+        preserveAspectRatio="xMidYMid meet"
       />
 
-      {/* Spine indentation */}
-      <path d="M 100 92 L 100 220" stroke={stroke} strokeWidth="0.7" fill="none" opacity="0.45" strokeDasharray="2 2" />
-      {/* Shoulder blade hints */}
-      <path d="M 76 108 Q 82 120 86 135" stroke={stroke} strokeWidth="0.6" fill="none" opacity="0.4" />
-      <path d="M 124 108 Q 118 120 114 135" stroke={stroke} strokeWidth="0.6" fill="none" opacity="0.4" />
-      {/* Lower back dimples */}
-      <circle cx="90" cy="230" r="1.2" fill={stroke} opacity="0.3" />
-      <circle cx="110" cy="230" r="1.2" fill={stroke} opacity="0.3" />
-      {/* Waist indent */}
-      <path d="M 70 210 Q 72 218 70 225" stroke={stroke} strokeWidth="0.4" fill="none" opacity="0.3" />
-      <path d="M 130 210 Q 128 218 130 225" stroke={stroke} strokeWidth="0.4" fill="none" opacity="0.3" />
+      {/* heatmap overlays */}
+      <ellipse cx="100" cy="48" rx="18" ry="22" fill={heatFill("head")} pointerEvents="none" />
+      <circle cx="79" cy="99" r="12" fill={heatFill("left_shoulder")} pointerEvents="none" />
+      <circle cx="121" cy="99" r="12" fill={heatFill("right_shoulder")} pointerEvents="none" />
+      <ellipse cx="100" cy="151" rx="30" ry="30" fill={heatFill("upper_back")} pointerEvents="none" />
+      <ellipse cx="100" cy="217" rx="29" ry="28" fill={heatFill("lower_back")} pointerEvents="none" />
+      <ellipse cx="60" cy="188" rx="12" ry="42" fill={heatFill("left_arm")} pointerEvents="none" />
+      <ellipse cx="140" cy="188" rx="12" ry="42" fill={heatFill("right_arm")} pointerEvents="none" />
+      <circle cx="86" cy="268" r="13" fill={heatFill("left_hip")} pointerEvents="none" />
+      <circle cx="114" cy="268" r="13" fill={heatFill("right_hip")} pointerEvents="none" />
+      <circle cx="86" cy="381" r="14" fill={heatFill("left_knee")} pointerEvents="none" />
+      <circle cx="114" cy="381" r="14" fill={heatFill("right_knee")} pointerEvents="none" />
+      <ellipse cx="84" cy="474" rx="13" ry="10" fill={heatFill("left_foot")} pointerEvents="none" />
+      <ellipse cx="116" cy="474" rx="13" ry="10" fill={heatFill("right_foot")} pointerEvents="none" />
 
-      {/* ============ LEFT ARM ============ */}
-      <path
-        d="M 74 92
-           Q 62 96 58 108
-           Q 54 122 52 140
-           Q 51 154 53 162
-           L 55 164
-           Q 58 158 60 145
-           Q 63 125 68 108
-           Q 72 98 74 92 Z"
-        fill="url(#limbShadeBack)"
-        stroke={stroke}
-        strokeWidth={sw}
-      />
-      <circle cx="53" cy="164" r="5.5" fill={skin} stroke={stroke} strokeWidth={sw} />
-      <path
-        d="M 48 164
-           Q 46 180 46 200
-           Q 46 218 48 232
-           Q 49 240 52 241
-           Q 56 242 57 236
-           Q 58 222 58 208
-           Q 58 188 58 168 Z"
-        fill="url(#limbShadeBack)"
-        stroke={stroke}
-        strokeWidth={sw}
-      />
-      <path d="M 48 240 Q 52 242 57 240" stroke={stroke} strokeWidth="0.6" fill="none" opacity="0.5" />
-      {/* Hand (back of hand showing knuckles) */}
-      <path
-        d="M 48 240
-           Q 46 245 46 252
-           Q 46 260 50 262
-           Q 54 263 58 261
-           Q 60 258 60 250
-           Q 59 244 57 240 Z"
-        fill={skin}
-        stroke={stroke}
-        strokeWidth={sw}
-      />
-      {/* Knuckle line */}
-      <path d="M 48 252 Q 53 253 58 252" stroke={stroke} strokeWidth="0.4" fill="none" opacity="0.4" />
-
-      {/* ============ RIGHT ARM ============ */}
-      <path
-        d="M 126 92
-           Q 138 96 142 108
-           Q 146 122 148 140
-           Q 149 154 147 162
-           L 145 164
-           Q 142 158 140 145
-           Q 137 125 132 108
-           Q 128 98 126 92 Z"
-        fill="url(#limbShadeBack)"
-        stroke={stroke}
-        strokeWidth={sw}
-      />
-      <circle cx="147" cy="164" r="5.5" fill={skin} stroke={stroke} strokeWidth={sw} />
-      <path
-        d="M 152 164
-           Q 154 180 154 200
-           Q 154 218 152 232
-           Q 151 240 148 241
-           Q 144 242 143 236
-           Q 142 222 142 208
-           Q 142 188 142 168 Z"
-        fill="url(#limbShadeBack)"
-        stroke={stroke}
-        strokeWidth={sw}
-      />
-      <path d="M 143 240 Q 148 242 152 240" stroke={stroke} strokeWidth="0.6" fill="none" opacity="0.5" />
-      <path
-        d="M 152 240
-           Q 154 245 154 252
-           Q 154 260 150 262
-           Q 146 263 142 261
-           Q 140 258 140 250
-           Q 141 244 143 240 Z"
-        fill={skin}
-        stroke={stroke}
-        strokeWidth={sw}
-      />
-      <path d="M 142 252 Q 147 253 152 252" stroke={stroke} strokeWidth="0.4" fill="none" opacity="0.4" />
-
-      {/* ============ LEFT LEG ============ */}
-      <path
-        d="M 80 268
-           Q 76 290 75 320
-           Q 75 345 77 360
-           L 82 362
-           Q 84 345 86 320
-           Q 88 295 90 272
-           Z"
-        fill="url(#limbShadeBack)"
-        stroke={stroke}
-        strokeWidth={sw}
-      />
-      {/* Back of knee (crease instead of kneecap) */}
-      <ellipse cx="80" cy="364" rx="7" ry="5" fill={skinShade} stroke={stroke} strokeWidth={sw} opacity="0.9" />
-      <path d="M 75 364 Q 80 362 85 364" stroke={stroke} strokeWidth="0.6" fill="none" opacity="0.5" />
-      {/* Calf (more defined on back view) */}
-      <path
-        d="M 73 370
-           Q 72 400 74 430
-           Q 75 450 78 462
-           Q 80 470 84 470
-           Q 88 470 88 462
-           Q 88 450 88 430
-           Q 88 400 87 370
-           Z"
-        fill="url(#limbShadeBack)"
-        stroke={stroke}
-        strokeWidth={sw}
-      />
-      {/* Calf muscle hint */}
-      <path d="M 76 395 Q 74 410 76 425" stroke={stroke} strokeWidth="0.4" fill="none" opacity="0.3" />
-      <path d="M 76 466 Q 82 470 88 466" stroke={stroke} strokeWidth="0.5" fill="none" opacity="0.4" />
-      {/* Heel view of foot */}
-      <path
-        d="M 76 470
-           Q 72 474 72 480
-           Q 72 484 78 485
-           Q 86 485 92 482
-           Q 92 476 90 470 Z"
-        fill={skin}
-        stroke={stroke}
-        strokeWidth={sw}
-      />
-
-      {/* ============ RIGHT LEG ============ */}
-      <path
-        d="M 120 268
-           Q 124 290 125 320
-           Q 125 345 123 360
-           L 118 362
-           Q 116 345 114 320
-           Q 112 295 110 272
-           Z"
-        fill="url(#limbShadeBack)"
-        stroke={stroke}
-        strokeWidth={sw}
-      />
-      <ellipse cx="120" cy="364" rx="7" ry="5" fill={skinShade} stroke={stroke} strokeWidth={sw} opacity="0.9" />
-      <path d="M 115 364 Q 120 362 125 364" stroke={stroke} strokeWidth="0.6" fill="none" opacity="0.5" />
-      <path
-        d="M 127 370
-           Q 128 400 126 430
-           Q 125 450 122 462
-           Q 120 470 116 470
-           Q 112 470 112 462
-           Q 112 450 112 430
-           Q 112 400 113 370
-           Z"
-        fill="url(#limbShadeBack)"
-        stroke={stroke}
-        strokeWidth={sw}
-      />
-      <path d="M 124 395 Q 126 410 124 425" stroke={stroke} strokeWidth="0.4" fill="none" opacity="0.3" />
-      <path d="M 112 466 Q 118 470 124 466" stroke={stroke} strokeWidth="0.5" fill="none" opacity="0.4" />
-      <path
-        d="M 124 470
-           Q 128 474 128 480
-           Q 128 484 122 485
-           Q 114 485 108 482
-           Q 108 476 110 470 Z"
-        fill={skin}
-        stroke={stroke}
-        strokeWidth={sw}
-      />
-
-      {/* ============ HEATMAP OVERLAYS ============ */}
-      <ellipse cx="100" cy="48" rx="20" ry="26" fill={heatFill("head")} pointerEvents="none" />
-      <circle cx="78" cy="95" r="11" fill={heatFill("left_shoulder")} pointerEvents="none" />
-      <circle cx="122" cy="95" r="11" fill={heatFill("right_shoulder")} pointerEvents="none" />
-      <ellipse cx="100" cy="140" rx="30" ry="30" fill={heatFill("upper_back")} pointerEvents="none" />
-      <ellipse cx="100" cy="210" rx="30" ry="28" fill={heatFill("lower_back")} pointerEvents="none" />
-      <ellipse cx="52" cy="175" rx="11" ry="35" fill={heatFill("left_arm")} pointerEvents="none" />
-      <ellipse cx="148" cy="175" rx="11" ry="35" fill={heatFill("right_arm")} pointerEvents="none" />
-      <circle cx="82" cy="262" r="12" fill={heatFill("left_hip")} pointerEvents="none" />
-      <circle cx="118" cy="262" r="12" fill={heatFill("right_hip")} pointerEvents="none" />
-      <circle cx="80" cy="364" r="13" fill={heatFill("left_knee")} pointerEvents="none" />
-      <circle cx="120" cy="364" r="13" fill={heatFill("right_knee")} pointerEvents="none" />
-      <ellipse cx="82" cy="478" rx="12" ry="8" fill={heatFill("left_foot")} pointerEvents="none" />
-      <ellipse cx="118" cy="478" rx="12" ry="8" fill={heatFill("right_foot")} pointerEvents="none" />
-
-      {/* ============ TAP ZONES ============ */}
+      {/* tap zones */}
       {!heatmap && (
         <g>
-          <ellipse cx="100" cy="45" rx="24" ry="32" fill="transparent" onClick={() => onRegionTap("head")} style={{ cursor: "pointer" }} />
-          <circle cx="78" cy="95" r="15" fill="transparent" onClick={() => onRegionTap("left_shoulder")} style={{ cursor: "pointer" }} />
-          <circle cx="122" cy="95" r="15" fill="transparent" onClick={() => onRegionTap("right_shoulder")} style={{ cursor: "pointer" }} />
-          <ellipse cx="100" cy="145" rx="32" ry="34" fill="transparent" onClick={() => onRegionTap("upper_back")} style={{ cursor: "pointer" }} />
-          <ellipse cx="100" cy="215" rx="32" ry="32" fill="transparent" onClick={() => onRegionTap("lower_back")} style={{ cursor: "pointer" }} />
-          <ellipse cx="52" cy="180" rx="16" ry="52" fill="transparent" onClick={() => onRegionTap("left_arm")} style={{ cursor: "pointer" }} />
-          <ellipse cx="148" cy="180" rx="16" ry="52" fill="transparent" onClick={() => onRegionTap("right_arm")} style={{ cursor: "pointer" }} />
-          <circle cx="82" cy="262" r="16" fill="transparent" onClick={() => onRegionTap("left_hip")} style={{ cursor: "pointer" }} />
-          <circle cx="118" cy="262" r="16" fill="transparent" onClick={() => onRegionTap("right_hip")} style={{ cursor: "pointer" }} />
-          <circle cx="80" cy="364" r="18" fill="transparent" onClick={() => onRegionTap("left_knee")} style={{ cursor: "pointer" }} />
-          <circle cx="120" cy="364" r="18" fill="transparent" onClick={() => onRegionTap("right_knee")} style={{ cursor: "pointer" }} />
-          <ellipse cx="82" cy="478" rx="14" ry="12" fill="transparent" onClick={() => onRegionTap("left_foot")} style={{ cursor: "pointer" }} />
-          <ellipse cx="118" cy="478" rx="14" ry="12" fill="transparent" onClick={() => onRegionTap("right_foot")} style={{ cursor: "pointer" }} />
+          <ellipse cx="100" cy="48" rx="24" ry="30" fill="transparent" onClick={() => onRegionTap("head")} style={{ cursor: "pointer" }} />
+          <circle cx="79" cy="99" r="16" fill="transparent" onClick={() => onRegionTap("left_shoulder")} style={{ cursor: "pointer" }} />
+          <circle cx="121" cy="99" r="16" fill="transparent" onClick={() => onRegionTap("right_shoulder")} style={{ cursor: "pointer" }} />
+          <ellipse cx="100" cy="151" rx="34" ry="34" fill="transparent" onClick={() => onRegionTap("upper_back")} style={{ cursor: "pointer" }} />
+          <ellipse cx="100" cy="217" rx="34" ry="32" fill="transparent" onClick={() => onRegionTap("lower_back")} style={{ cursor: "pointer" }} />
+          <ellipse cx="60" cy="188" rx="18" ry="58" fill="transparent" onClick={() => onRegionTap("left_arm")} style={{ cursor: "pointer" }} />
+          <ellipse cx="140" cy="188" rx="18" ry="58" fill="transparent" onClick={() => onRegionTap("right_arm")} style={{ cursor: "pointer" }} />
+          <circle cx="86" cy="268" r="18" fill="transparent" onClick={() => onRegionTap("left_hip")} style={{ cursor: "pointer" }} />
+          <circle cx="114" cy="268" r="18" fill="transparent" onClick={() => onRegionTap("right_hip")} style={{ cursor: "pointer" }} />
+          <circle cx="86" cy="381" r="20" fill="transparent" onClick={() => onRegionTap("left_knee")} style={{ cursor: "pointer" }} />
+          <circle cx="114" cy="381" r="20" fill="transparent" onClick={() => onRegionTap("right_knee")} style={{ cursor: "pointer" }} />
+          <ellipse cx="84" cy="474" rx="16" ry="14" fill="transparent" onClick={() => onRegionTap("left_foot")} style={{ cursor: "pointer" }} />
+          <ellipse cx="116" cy="474" rx="16" ry="14" fill="transparent" onClick={() => onRegionTap("right_foot")} style={{ cursor: "pointer" }} />
         </g>
       )}
 
@@ -893,36 +360,37 @@ function BodyBack({ onRegionTap, pulseRegion, heatmap }) {
   );
 }
 
+
 const REGION_COORDS_FRONT = {
   head: { cx: 100, cy: 48 },
-  left_shoulder: { cx: 78, cy: 95 },
-  right_shoulder: { cx: 122, cy: 95 },
-  chest: { cx: 100, cy: 135 },
-  abdomen: { cx: 100, cy: 200 },
-  left_arm: { cx: 52, cy: 175 },
-  right_arm: { cx: 148, cy: 175 },
-  left_hip: { cx: 82, cy: 262 },
-  right_hip: { cx: 118, cy: 262 },
-  left_knee: { cx: 80, cy: 364 },
-  right_knee: { cx: 120, cy: 364 },
-  left_foot: { cx: 82, cy: 478 },
-  right_foot: { cx: 118, cy: 478 },
+  left_shoulder: { cx: 79, cy: 99 },
+  right_shoulder: { cx: 121, cy: 99 },
+  chest: { cx: 100, cy: 146 },
+  abdomen: { cx: 100, cy: 207 },
+  left_arm: { cx: 60, cy: 188 },
+  right_arm: { cx: 140, cy: 188 },
+  left_hip: { cx: 86, cy: 268 },
+  right_hip: { cx: 114, cy: 268 },
+  left_knee: { cx: 86, cy: 381 },
+  right_knee: { cx: 114, cy: 381 },
+  left_foot: { cx: 84, cy: 474 },
+  right_foot: { cx: 116, cy: 474 },
 };
 
 const REGION_COORDS_BACK = {
   head: { cx: 100, cy: 48 },
-  left_shoulder: { cx: 78, cy: 95 },
-  right_shoulder: { cx: 122, cy: 95 },
-  upper_back: { cx: 100, cy: 140 },
-  lower_back: { cx: 100, cy: 210 },
-  left_arm: { cx: 52, cy: 175 },
-  right_arm: { cx: 148, cy: 175 },
-  left_hip: { cx: 82, cy: 262 },
-  right_hip: { cx: 118, cy: 262 },
-  left_knee: { cx: 80, cy: 364 },
-  right_knee: { cx: 120, cy: 364 },
-  left_foot: { cx: 82, cy: 478 },
-  right_foot: { cx: 118, cy: 478 },
+  left_shoulder: { cx: 79, cy: 99 },
+  right_shoulder: { cx: 121, cy: 99 },
+  upper_back: { cx: 100, cy: 151 },
+  lower_back: { cx: 100, cy: 217 },
+  left_arm: { cx: 60, cy: 188 },
+  right_arm: { cx: 140, cy: 188 },
+  left_hip: { cx: 86, cy: 268 },
+  right_hip: { cx: 114, cy: 268 },
+  left_knee: { cx: 86, cy: 381 },
+  right_knee: { cx: 114, cy: 381 },
+  left_foot: { cx: 84, cy: 474 },
+  right_foot: { cx: 116, cy: 474 },
 };
 
 function PulseRing({ region, view }) {
